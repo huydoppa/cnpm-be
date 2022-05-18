@@ -8,26 +8,19 @@ const res = require('express/lib/response');
 const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
 const accessTokenLife = process.env.ACCESS_TOKEN_LIFE;
 const bcrypt = require('bcrypt');
+const Product = require('../Models/Product.model');
 
 module.exports = {
-    createListOrderProductDetail: async (orderProductDetails) => {
-      try {
-        for (let orderProductDetail of orderProductDetails) {
-           await ProductOrderDetail.create(orderProductDetail);
-        }
-        return "success";
-      } catch (error) {
-        return "error";
+  createListOrderProductDetail: async (orderProductDetails) => {
+    try {
+      for (const orderProductDetail in orderProductDetails) {
+        
+       await ProductOrderDetail.create(orderProductDetail);
       }
-    },
-    getOrderProductDetails: async(req,res) =>{
-      try{
-        Product = await ProductOrder.find({}).toArray()
-        console(Product);
 
-      }catch(error)
-      {
-        return res.json({'e':'error'})
-      }
+      return "success";
+    } catch (error) {
+      return error;
     }
-  };
+  },
+};

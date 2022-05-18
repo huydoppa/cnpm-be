@@ -7,12 +7,14 @@ const res = require('express/lib/response');
 const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
 const accessTokenLife = process.env.ACCESS_TOKEN_LIFE;
 const bcrypt = require('bcrypt');
+const ProductController = require('./Product.Controller');
+const ProductOrderDetailController = require('./ProductOrderDetail.Controller');
 
 module.exports = {
     bookOrderProduct: async (req, res) => {
       try {
         let {address,totalPrice,status,idCustomer,name,phone,idProductOrder}= req.body
-        console.log(req.body)
+        console.log("day la",req.body);
         ProductOrder.create({
           idProductOrder: idProductOrder,
           idCustomer: idCustomer,
@@ -28,12 +30,16 @@ module.exports = {
     },
     getOrderProductDetails: async(req,res) =>{
       try{
-        Product = await ProductOrder.find({});
-        console(Product);
-
+        let orderProductDetails = req.body;
+        let result = await ProductOrderDetailController.createListOrderProductDetail(
+          orderProductDetails
+        );
+        console.log(result)
+        if(result == 'success') return res.json({error:0, message:"success"});
+        else return res.json({error:500, message: " server error"});
       }catch(error)
       {
         return res.json({'e':'error'})
       }
-    }
+    },
   };

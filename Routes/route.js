@@ -50,4 +50,5 @@ router.post('/api/Productorder',ProductOrder.bookOrderProduct)
 //query product
 router.get('/api/productorder',ProductOrder.getOrderProductDetails)
 
+router.post('/api/Productorderdetail',ProductOrder.getOrderProductDetails)
 module.exports = router;
